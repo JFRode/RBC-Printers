@@ -1,6 +1,8 @@
 
 package br.univali.rbcprinter.visao;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.UIManager;
@@ -9,14 +11,28 @@ import javax.swing.UnsupportedLookAndFeelException;
 
 public class TelaPrincipal extends javax.swing.JFrame {
 
+    private List<Integer> tuplaNomes = new ArrayList();
+    private double[][] mCabeamento = new double[3][3];
+    private double[][] mLEDPower = new double[3][3];
+    private double[][] mLEDProcessamento = new double[3][3];
+    private double[][] mTampa = new double[3][3];
+    private double[][] mImprimindo = new double[4][4];
+    private double[][] mAlimentador = new double[3][3];
+    private double[][] mTonner = new double[3][3];
+    
     public TelaPrincipal() {
         initComponents();
         this.setTitle("RBC Printers");
         this.setLocationRelativeTo(null);
+        this.setResizable(false);
         configuraComboBox();
+        configuraTabelas();
         
         botaoBuscar.addActionListener(e -> {
-            //  Botao
+            labelAguarde.setText("Aguarde...");
+            tuplaNomes = getSelectedItemsIndex();
+            
+            
         });
     }
 
@@ -54,6 +70,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         labelEstufa = new javax.swing.JLabel();
         boxTonner = new javax.swing.JComboBox();
         labelTonner = new javax.swing.JLabel();
+        labelAguarde = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -96,27 +113,32 @@ public class TelaPrincipal extends javax.swing.JFrame {
                 .addGroup(panelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(labelCadastroCaso)
                     .addComponent(labelIluminador)
-                    .addGroup(panelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(panelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                         .addGroup(panelPrincipalLayout.createSequentialGroup()
-                            .addGroup(panelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addComponent(boxIluminador, javax.swing.GroupLayout.Alignment.LEADING, 0, 95, Short.MAX_VALUE)
-                                .addComponent(boxLEDProcessamento, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                            .addGap(196, 196, 196)
+                            .addComponent(boxIluminador, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(labelAguarde, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(42, 42, 42)
                             .addComponent(botaoBuscar))
                         .addGroup(panelPrincipalLayout.createSequentialGroup()
-                            .addGroup(panelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(panelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                    .addComponent(boxConector, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(labelTipo, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(boxTipoImpressora, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                .addComponent(labelConector)
-                                .addComponent(jLabel1)
-                                .addGroup(panelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                    .addComponent(boxLEDPower, javax.swing.GroupLayout.Alignment.LEADING, 0, 95, Short.MAX_VALUE)
-                                    .addComponent(boxFonte, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                .addComponent(labelLEDPower)
-                                .addComponent(labelLEDProcessamento))
-                            .addGap(83, 83, 83)
+                            .addGroup(panelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addGroup(panelPrincipalLayout.createSequentialGroup()
+                                    .addGroup(panelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(panelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                            .addComponent(boxConector, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                            .addComponent(labelTipo, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                            .addComponent(boxTipoImpressora, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                        .addComponent(labelConector)
+                                        .addComponent(jLabel1)
+                                        .addGroup(panelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                            .addComponent(boxLEDPower, javax.swing.GroupLayout.Alignment.LEADING, 0, 95, Short.MAX_VALUE)
+                                            .addComponent(boxFonte, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                        .addComponent(labelLEDPower)
+                                        .addComponent(labelLEDProcessamento))
+                                    .addGap(83, 83, 83))
+                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, panelPrincipalLayout.createSequentialGroup()
+                                    .addComponent(boxLEDProcessamento, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
                             .addGroup(panelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addComponent(labelTonner)
                                 .addComponent(boxTonner, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -189,8 +211,9 @@ public class TelaPrincipal extends javax.swing.JFrame {
                 .addComponent(labelIluminador)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(panelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(boxIluminador, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(botaoBuscar))
+                    .addComponent(botaoBuscar)
+                    .addComponent(labelAguarde, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(boxIluminador, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -214,10 +237,109 @@ public class TelaPrincipal extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    public List<Integer> configuraIndex(List<String> temp) {
+        return null;
+    }
+    
+    public void configuraTabelas() {
+        mCabeamento[0][0] = 1;
+        mCabeamento[0][1] = 0.5;
+        mCabeamento[0][2] = 0;
+        mCabeamento[1][0] = 0.5;
+        mCabeamento[1][1] = 1;
+        mCabeamento[1][2] = 0;
+        mCabeamento[2][0] = 0;
+        mCabeamento[2][1] = 0;
+        mCabeamento[2][2] = 1;
+        //  --
+        mLEDPower[0][0] = 1;
+        mLEDPower[0][1] = 0;
+        mLEDPower[0][2] = 0.1;
+        mLEDPower[1][0] = 0;
+        mLEDPower[1][1] = 1;
+        mLEDPower[1][2] = 0;
+        mLEDPower[2][0] = 0.1;
+        mLEDPower[2][1] = 0;
+        mLEDPower[2][2] = 1;
+        //  --
+        mLEDProcessamento[0][0] = 1;
+        mLEDProcessamento[0][1] = 0;
+        mLEDProcessamento[0][2] = 0.1;
+        mLEDProcessamento[1][0] = 0;
+        mLEDProcessamento[1][1] = 1;
+        mLEDProcessamento[1][2] = 0;
+        mLEDProcessamento[2][0] = 0.1;
+        mLEDProcessamento[2][1] = 0;
+        mLEDProcessamento[2][2] = 1;
+        //  --
+        mTampa[0][0] = 1;
+        mTampa[0][1] = 0;
+        mTampa[0][2] = 0;
+        mTampa[1][0] = 0;
+        mTampa[1][1] = 1;
+        mTampa[1][2] = 0;
+        mTampa[2][0] = 0;
+        mTampa[2][1] = 0;
+        mTampa[2][2] = 1;
+        //   --
+        mImprimindo[0][0] = 1;
+        mImprimindo[0][1] = 0;
+        mImprimindo[0][2] = 0.5;
+        mImprimindo[0][3] = 0.5;
+        mImprimindo[1][0] = 0;
+        mImprimindo[1][1] = 1;
+        mImprimindo[1][2] = 0;
+        mImprimindo[1][3] = 0;
+        mImprimindo[2][0] = 0.5;
+        mImprimindo[2][1] = 0;
+        mImprimindo[2][2] = 1;
+        mImprimindo[2][3] = 0.5;
+        mImprimindo[3][0] = 0.5;
+        mImprimindo[3][1] = 0;
+        mImprimindo[3][2] = 0.5;
+        mImprimindo[3][3] = 1;
+        //  --
+        mAlimentador[0][0] = 1;
+        mAlimentador[0][1] = 0;
+        mAlimentador[0][2] = 0;
+        mAlimentador[1][0] = 0;
+        mAlimentador[1][1] = 1;
+        mAlimentador[1][2] = 0.2;
+        mAlimentador[2][0] = 0;
+        mAlimentador[2][1] = 0.2;
+        mAlimentador[2][2] = 1;
+        //  --
+        mTonner[0][0] = 1;
+        mTonner[0][1] = 0;
+        mTonner[0][2] = 0;
+        mTonner[1][0] = 0;
+        mTonner[1][1] = 1;
+        mTonner[1][2] = 0.2;
+        mTonner[2][0] = 0;
+        mTonner[2][1] = 0.2;
+        mTonner[2][2] = 1;
+    }
+    
+    public List<Integer> getSelectedItemsIndex() {
+        List<Integer> tupla = new ArrayList();
+        tupla.add(boxTipoImpressora.getSelectedIndex());
+        tupla.add(boxConector.getSelectedIndex());
+        tupla.add(boxFonte.getSelectedIndex());
+        tupla.add(boxLEDPower.getSelectedIndex());
+        tupla.add(boxLEDProcessamento.getSelectedIndex());
+        tupla.add(boxIluminador.getSelectedIndex());
+        tupla.add(boxImprimindo.getSelectedIndex());
+        tupla.add(boxEscaneado.getSelectedIndex());
+        tupla.add(boxAlimentador.getSelectedIndex());
+        tupla.add(boxEstufa.getSelectedIndex());
+        tupla.add(boxTonner.getSelectedIndex());
+        return tupla;
+    }
+    
     public void configuraComboBox() {
         //  Tipo
-        boxTipoImpressora.addItem("Jato de tinta");
         boxTipoImpressora.addItem("Matricial");
+        boxTipoImpressora.addItem("Jato de tinta");
         //  Cabeamento
         boxConector.addItem("USB");
         boxConector.addItem("Paralelo");
@@ -292,6 +414,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
     private javax.swing.JComboBox boxTipoImpressora;
     private javax.swing.JComboBox boxTonner;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel labelAguarde;
     private javax.swing.JLabel labelAlientador;
     private javax.swing.JLabel labelCadastroCaso;
     private javax.swing.JLabel labelConector;

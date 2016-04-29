@@ -59,32 +59,39 @@
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Component id="labelCadastroCaso" min="-2" max="-2" attributes="0"/>
                       <Component id="labelIluminador" alignment="0" min="-2" max="-2" attributes="0"/>
-                      <Group type="103" alignment="0" groupAlignment="1" attributes="0">
+                      <Group type="103" alignment="0" groupAlignment="1" max="-2" attributes="0">
                           <Group type="102" attributes="0">
-                              <Group type="103" groupAlignment="1" max="-2" attributes="0">
-                                  <Component id="boxIluminador" alignment="0" pref="95" max="32767" attributes="0"/>
-                                  <Component id="boxLEDProcessamento" alignment="0" max="32767" attributes="0"/>
-                              </Group>
-                              <EmptySpace min="-2" pref="196" max="-2" attributes="0"/>
+                              <Component id="boxIluminador" min="-2" pref="95" max="-2" attributes="0"/>
+                              <EmptySpace max="32767" attributes="0"/>
+                              <Component id="labelAguarde" min="-2" pref="64" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="42" max="-2" attributes="0"/>
                               <Component id="botaoBuscar" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <Group type="102" attributes="0">
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Group type="103" alignment="0" groupAlignment="1" max="-2" attributes="0">
-                                      <Component id="boxConector" alignment="0" max="32767" attributes="0"/>
-                                      <Component id="labelTipo" alignment="0" max="32767" attributes="0"/>
-                                      <Component id="boxTipoImpressora" alignment="0" max="32767" attributes="0"/>
+                              <Group type="103" groupAlignment="1" attributes="0">
+                                  <Group type="102" attributes="0">
+                                      <Group type="103" groupAlignment="0" attributes="0">
+                                          <Group type="103" alignment="0" groupAlignment="1" max="-2" attributes="0">
+                                              <Component id="boxConector" alignment="0" max="32767" attributes="0"/>
+                                              <Component id="labelTipo" alignment="0" max="32767" attributes="0"/>
+                                              <Component id="boxTipoImpressora" alignment="0" max="32767" attributes="0"/>
+                                          </Group>
+                                          <Component id="labelConector" alignment="0" min="-2" max="-2" attributes="0"/>
+                                          <Component id="jLabel1" alignment="0" min="-2" max="-2" attributes="0"/>
+                                          <Group type="103" alignment="0" groupAlignment="1" max="-2" attributes="0">
+                                              <Component id="boxLEDPower" alignment="0" pref="95" max="32767" attributes="0"/>
+                                              <Component id="boxFonte" alignment="0" max="32767" attributes="0"/>
+                                          </Group>
+                                          <Component id="labelLEDPower" alignment="0" min="-2" max="-2" attributes="0"/>
+                                          <Component id="labelLEDProcessamento" alignment="0" min="-2" max="-2" attributes="0"/>
+                                      </Group>
+                                      <EmptySpace min="-2" pref="83" max="-2" attributes="0"/>
                                   </Group>
-                                  <Component id="labelConector" alignment="0" min="-2" max="-2" attributes="0"/>
-                                  <Component id="jLabel1" alignment="0" min="-2" max="-2" attributes="0"/>
-                                  <Group type="103" alignment="0" groupAlignment="1" max="-2" attributes="0">
-                                      <Component id="boxLEDPower" alignment="0" pref="95" max="32767" attributes="0"/>
-                                      <Component id="boxFonte" alignment="0" max="32767" attributes="0"/>
+                                  <Group type="102" alignment="0" attributes="0">
+                                      <Component id="boxLEDProcessamento" min="-2" pref="95" max="-2" attributes="0"/>
+                                      <EmptySpace max="-2" attributes="0"/>
                                   </Group>
-                                  <Component id="labelLEDPower" alignment="0" min="-2" max="-2" attributes="0"/>
-                                  <Component id="labelLEDProcessamento" alignment="0" min="-2" max="-2" attributes="0"/>
                               </Group>
-                              <EmptySpace min="-2" pref="83" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Component id="labelTonner" alignment="0" min="-2" max="-2" attributes="0"/>
                                   <Component id="boxTonner" alignment="0" min="-2" pref="94" max="-2" attributes="0"/>
@@ -178,8 +185,9 @@
                   <Component id="labelIluminador" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="boxIluminador" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="botaoBuscar" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="labelAguarde" alignment="0" min="-2" pref="23" max="-2" attributes="0"/>
+                      <Component id="boxIluminador" alignment="0" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="32767" attributes="0"/>
               </Group>
@@ -331,6 +339,8 @@
           <Properties>
             <Property name="text" type="java.lang.String" value="O tonner esta:"/>
           </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="labelAguarde">
         </Component>
       </SubComponents>
     </Container>

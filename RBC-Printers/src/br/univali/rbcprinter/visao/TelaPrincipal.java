@@ -1,6 +1,7 @@
 
 package br.univali.rbcprinter.visao;
 
+import br.univali.rbcprinter.controle.Conexao;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -10,7 +11,6 @@ import javax.swing.UnsupportedLookAndFeelException;
 
 
 public class TelaPrincipal extends javax.swing.JFrame {
-
     private List<Integer> tuplaNomes = new ArrayList();
     private double[][] mCabeamento = new double[3][3];
     private double[][] mLEDPower = new double[3][3];
@@ -31,6 +31,8 @@ public class TelaPrincipal extends javax.swing.JFrame {
         botaoBuscar.addActionListener(e -> {
             labelAguarde.setText("Aguarde...");
             tuplaNomes = getSelectedItemsIndex();
+            Conexao con = new Conexao();
+            //  Percorrer casos somando similaridade neste atributo
             
             
         });

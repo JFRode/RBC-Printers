@@ -34,7 +34,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
             Conexao con = new Conexao();
             //  Percorrer casos somando similaridade neste atributo
             
-            
+            con.encerrarConexao();
         });
     }
 

@@ -4,7 +4,9 @@ package br.univali.rbcprinter.controle;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 
 public class Conexao {
     private String url = "jdbc:postgresql://localhost:5432/db_rbc-printers";
@@ -12,6 +14,7 @@ public class Conexao {
     private String senha = "1234";
     private Connection conexao;
     private PreparedStatement pStatement;
+    private Statement statement;
 
     public Conexao() {
         try {
@@ -29,6 +32,17 @@ public class Conexao {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+    
+    public ResultSet consultaCaso(int index) {
+        String sql = "SELECT * FROM caso WHERE id = " + index;
+        ResultSet rs = null;
+        try {
+            rs = statement.executeQuery(sql);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return rs;
     }
     
     public void inserirCaso(String tipo, String cabo, String fonte, String ledPower, String ledProcess, String iluminador, String imprimindo, String escaneando, String alimentador, String estufa, String tonner, String solucao) {

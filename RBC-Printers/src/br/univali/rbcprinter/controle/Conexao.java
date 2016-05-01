@@ -34,14 +34,14 @@ public class Conexao {
         }
     }
     
-    public ResultSet consultaCaso(int index) {
-        String sql = "SELECT * FROM caso WHERE id = " + index;
+    public ResultSet consultaCaso() {
+        String sql = "SELECT * FROM caso";
         ResultSet rs = null;
         try {
             rs = statement.executeQuery(sql);
         } catch (SQLException e) {
             e.printStackTrace();
-        }
+        }        
         return rs;
     }
     
@@ -65,5 +65,18 @@ public class Conexao {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    public int countCaso() {
+        String sql = "SELECT count(id) FROM caso";
+        int count = 0;
+        ResultSet rs = null;
+        try {
+            rs = statement.executeQuery(sql);
+            while(rs.next()) count++;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return count;
     }
 }

@@ -74,6 +74,7 @@ public class Conexao {
             pStatement.setString(11, tonner);
             pStatement.setString(12, solucao);
             pStatement.executeUpdate();
+            System.out.println("Caso inserido;");
         } catch (SQLException e) {
             e.printStackTrace();
         }

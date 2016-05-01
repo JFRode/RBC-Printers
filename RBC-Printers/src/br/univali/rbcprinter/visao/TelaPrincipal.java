@@ -1,6 +1,8 @@
 
 package br.univali.rbcprinter.visao;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -19,8 +21,11 @@ public class TelaPrincipal extends javax.swing.JFrame {
         this.setResizable(false);
         configuraComboBox();
         
-        botaoBuscar.addActionListener(e -> {
-            new TelaTabela(getSelectedItemsIndex()).setVisible(true);
+        botaoBuscar.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                new TelaTabela(getSelectedItemsIndex()).setVisible(true);
+            }
         });
     }
 

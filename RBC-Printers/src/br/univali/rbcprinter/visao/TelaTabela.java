@@ -3,6 +3,9 @@ package br.univali.rbcprinter.visao;
 
 import br.univali.rbcprinter.controle.Conexao;
 import br.univali.rbcprinter.modelo.Insercao;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -22,6 +25,7 @@ public class TelaTabela extends javax.swing.JFrame {
     
     public TelaTabela(List<Integer> tupla) {
         initComponents();
+        this.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         this.setTitle("RBC Printers - Tabela de similaridade");
         this.setLocationRelativeTo(null);
         this.setResizable(true);
@@ -61,7 +65,6 @@ public class TelaTabela extends javax.swing.JFrame {
                         somatorioSimilaridade += pesos[i-1] * sim(tupla.get(i-1), getIndexTabela(rs.getString(i), i), i);
                     }
                 }
-                System.out.println(somatorioSimilaridade);
                 listaInsercoes.add(new Insercao(Integer.valueOf(rs.getString(1)), somatorioSimilaridade));
                 this.somatorioPesosSimilaridade += somatorioSimilaridade;
                 somatorioSimilaridade = 0;
@@ -78,6 +81,14 @@ public class TelaTabela extends javax.swing.JFrame {
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
+        
+        tableCasos.addMouseListener(new MouseAdapter() {
+            public void mousePressed(MouseEvent me) {
+                if (me.getClickCount() == 2) {
+                    new TelaSolucao(tupla, tableCasos.getValueAt(tableCasos.getSelectedRow(), 12).toString());
+                }
+            }
+        });
     }
 
     public double sim(int a1, int a2, int index) {
@@ -108,7 +119,7 @@ public class TelaTabela extends javax.swing.JFrame {
         return 0;
     }
     
-    public int getIndexTabela(String r, int i) {
+    public static int getIndexTabela(String r, int i) {
         switch(i) {
             case 1: //  Tipo
                 if (r.equals("Matricial")) return 0;
@@ -137,7 +148,7 @@ public class TelaTabela extends javax.swing.JFrame {
                 if (r.equals("Não")) return 1;
                 if (r.equals("Impressão falhada")) return 2;
                 if (r.equals("Imprime em branco")) return 3;
-            case 8: //  Escanenado
+            case 8: //  Escaneando
                 if (r.equals("Sim")) return 0;
                 else return 1;
             case 9: //  Alimentador

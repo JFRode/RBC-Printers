@@ -2,14 +2,15 @@
 package br.univali.rbcprinter.visao;
 
 import br.univali.rbcprinter.controle.Conexao;
+import br.univali.rbcprinter.modelo.Insercao;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.DecimalFormat;
+import java.util.ArrayList;
 import java.util.List;
 import javax.swing.table.DefaultTableModel;
 
 public class TelaTabela extends javax.swing.JFrame {
-
     private double[][] mCabeamento = new double[3][3];
     private double[][] mLEDPower = new double[3][3];
     private double[][] mLEDProcessamento = new double[3][3];
@@ -18,15 +19,21 @@ public class TelaTabela extends javax.swing.JFrame {
     private double[][] mAlimentador = new double[3][3];
     private double[][] mTonner = new double[3][3];
     private double[] pesos = {0.8, 0, 1, 1, 0.3, 0.5, 1, 1, 0.8, 0.3, 0.8};
-    private DecimalFormat format = new DecimalFormat("#.##");
+    private double somatorioPesosSimilaridade = 0;
     
     public TelaTabela(List<Integer> tupla) {
         initComponents();
         this.setTitle("RBC Printers - Tabela de similaridade");
         this.setLocationRelativeTo(null);
         this.setResizable(true);
+        tableCasos.setRowSelectionAllowed(true);
         configuraTabelas();
-        DefaultTableModel modelo = new DefaultTableModel();
+        DefaultTableModel modelo = new DefaultTableModel() {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
         modelo.addColumn("ID");
         modelo.addColumn("Tipo");
         modelo.addColumn("Cabo");
@@ -42,11 +49,9 @@ public class TelaTabela extends javax.swing.JFrame {
         modelo.addColumn("Solução");
         modelo.addColumn("Similaridade");
         
-        double somatorioPesos = 0;
-        for (double peso : pesos) somatorioPesos += peso;
-        
         double somatorioSimilaridade = 0;
-        String[] vetor = new String[14]; // Tem id e solução + percentual
+        String[] vetorModel = new String[14]; // Tem id e solução + percentual
+        List<Insercao> listaInsercoes = new ArrayList<>();
         String aux;
         Conexao con = new Conexao();
         ResultSet rs = con.consultaCaso();
@@ -56,12 +61,19 @@ public class TelaTabela extends javax.swing.JFrame {
                     if (i != 0 && i < 12) {
                         somatorioSimilaridade += pesos[i-1] * sim(tupla.get(i-1), getIndexTabela(rs.getString(i), i), i);
                     }
-                    vetor[i] = rs.getString(i+1);
                 }
-                System.out.println(somatorioSimilaridade + "/" + somatorioPesos);
-                vetor[13] = format.format(somatorioSimilaridade/somatorioPesos);
-                modelo.addRow(vetor);
+                System.out.println(somatorioSimilaridade);
+                listaInsercoes.add(new Insercao(Integer.valueOf(rs.getString(1)), somatorioSimilaridade));
+                this.somatorioPesosSimilaridade += somatorioSimilaridade;
                 somatorioSimilaridade = 0;
+            }
+            Insercao.insere(listaInsercoes, this.somatorioPesosSimilaridade);
+            rs = con.consultaCasoOrdenado();
+            while (rs.next()) {
+                for (int i=0; i < 14; i++) {
+                    vetorModel[i] = rs.getString(i+1);
+                }
+                modelo.addRow(vetorModel);
             }
             tableCasos.setModel(modelo);
         } catch (SQLException ex) {

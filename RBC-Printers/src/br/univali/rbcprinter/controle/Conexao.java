@@ -36,13 +36,24 @@ public class Conexao {
     }
     
     public ResultSet consultaCaso() {
-        String sql = "SELECT * FROM caso";
+        String sql = "SELECT id, tipo_impressora, cabeamento, fonte, led_power, led_processamento, iluminador_scanner, imprimindo, scanner, alimentador, estufa, tonner, solucao FROM caso";
         ResultSet rs = null;
         try {
             rs = statement.executeQuery(sql);
         } catch (SQLException e) {
             e.printStackTrace();
         }        
+        return rs;
+    }
+    
+    public ResultSet consultaCasoOrdenado() {
+        String sql = "SELECT * FROM caso ORDER BY similaridade";
+        ResultSet rs = null;
+        try {
+            rs = statement.executeQuery(sql);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         return rs;
     }
     
@@ -62,6 +73,18 @@ public class Conexao {
             pStatement.setString(10, estufa);
             pStatement.setString(11, tonner);
             pStatement.setString(12, solucao);
+            pStatement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+    
+    public void alterarSimilaridade(int id, String similaridade) {
+        String sql = "UPDATE caso SET similaridade = ? WHERE id = ?";
+        try {
+            pStatement = conexao.prepareStatement(sql);
+            pStatement.setString(1, similaridade);
+            pStatement.setInt(2, id);
             pStatement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();

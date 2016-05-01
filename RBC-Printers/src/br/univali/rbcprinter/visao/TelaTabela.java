@@ -51,12 +51,10 @@ public class TelaTabela extends javax.swing.JFrame {
         try {
             while (rs.next()) {
                 for (int i=0; i < 13; i++) {
-                    if (i != 0 && i < 11) {
-                        somatorioSimilaridade += pesos[i-1] * sim(tupla.get(i), getIndexTabela(rs.getString(i+1), i), i);
-                        vetor[i] = rs.getString(i+1);
-                    } else { // Entra no ID e na solução somente
-                        vetor[i] = rs.getString(i+1);
+                    if (i != 0 && i < 12) {
+                        somatorioSimilaridade += pesos[i-1] * sim(tupla.get(i-1), getIndexTabela(rs.getString(i), i), i);
                     }
+                    vetor[i] = rs.getString(i+1);
                 }
                 vetor[13] = String.valueOf(somatorioSimilaridade/somatorioPesos);
                 modelo.addRow(vetor);
@@ -274,8 +272,8 @@ public class TelaTabela extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(labelDica)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(scrollPaneTabela, javax.swing.GroupLayout.PREFERRED_SIZE, 295, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(scrollPaneTabela, javax.swing.GroupLayout.DEFAULT_SIZE, 298, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());

@@ -67,17 +67,4 @@ public class Conexao {
             e.printStackTrace();
         }
     }
-
-    public int countCaso() {
-        String sql = "SELECT * FROM caso";
-        int count = 0;
-        ResultSet rs = null;
-        try {
-            rs = statement.executeQuery(sql);
-            while(rs.next()) count++;
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return count;
-    }
 }

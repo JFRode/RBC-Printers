@@ -22,7 +22,7 @@ public class TelaTabela extends javax.swing.JFrame {
         initComponents();
         this.setTitle("RBC Printers - Tabela de similaridade");
         this.setLocationRelativeTo(null);
-        this.setResizable(false);
+        this.setResizable(true);
         configuraTabelas();
         DefaultTableModel modelo = new DefaultTableModel();
         modelo.addColumn("ID");
@@ -47,18 +47,16 @@ public class TelaTabela extends javax.swing.JFrame {
         String[] vetor = new String[14]; // Tem id e solução + percentual
         String aux;
         Conexao con = new Conexao();
-        int tamCaso = con.countCaso();
         ResultSet rs = con.consultaCaso();
         try {
             while (rs.next()) {
-                for (int i=0; i < tamCaso; i++) {
+                for (int i=0; i < 13; i++) {
                     if (i != 0 && i < 11) {
-                        somatorioSimilaridade += pesos[i] * sim(tupla.get(i), getIndexTabela(rs.getString(i+1), i), i);
+                        somatorioSimilaridade += pesos[i-1] * sim(tupla.get(i), getIndexTabela(rs.getString(i+1), i), i);
                         vetor[i] = rs.getString(i+1);
                     } else { // Entra no ID e na solução somente
                         vetor[i] = rs.getString(i+1);
                     }
-                    somatorioPesos += pesos[i];
                 }
                 vetor[13] = String.valueOf(somatorioSimilaridade/somatorioPesos);
                 modelo.addRow(vetor);

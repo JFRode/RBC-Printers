@@ -5,8 +5,6 @@ import br.univali.rbcprinter.controle.Conexao;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.table.DefaultTableModel;
 
 public class TelaTabela extends javax.swing.JFrame {
@@ -28,6 +26,7 @@ public class TelaTabela extends javax.swing.JFrame {
         configuraTabelas();
         DefaultTableModel modelo = new DefaultTableModel();
         modelo.addColumn("ID");
+        modelo.addColumn("Tipo");
         modelo.addColumn("Cabo");
         modelo.addColumn("Fonte");
         modelo.addColumn("LED Power");
@@ -41,30 +40,32 @@ public class TelaTabela extends javax.swing.JFrame {
         modelo.addColumn("Solução");
         modelo.addColumn("Similaridade");
         
-        Conexao con = new Conexao();
-        ResultSet rs = con.consultaCaso();
-        
-        int somatorioPesos = 0;
+        double somatorioPesos = 0;
         for (double peso : pesos) somatorioPesos += peso;
         
         double somatorioSimilaridade = 0;
-        String[] vetor = new String[13]; // Tem id e solução + percentual
-        
+        String[] vetor = new String[14]; // Tem id e solução + percentual
+        String aux;
+        Conexao con = new Conexao();
+        int tamCaso = con.countCaso();
+        ResultSet rs = con.consultaCaso();
         try {
             while (rs.next()) {
-                for (int i=0; i < con.countCaso(); i++) {
+                for (int i=0; i < tamCaso; i++) {
                     if (i != 0 && i < 11) {
-                        somatorioSimilaridade = pesos[i] * sim(tupla.get(i), getIndexTabela(rs.getString(i), i), i);
-                        
-                    } else {
-                        vetor[i] = rs.getString(i);
+                        somatorioSimilaridade += pesos[i] * sim(tupla.get(i), getIndexTabela(rs.getString(i+1), i), i);
+                        vetor[i] = rs.getString(i+1);
+                    } else { // Entra no ID e na solução somente
+                        vetor[i] = rs.getString(i+1);
                     }
-                    
                     somatorioPesos += pesos[i];
                 }
+                vetor[13] = String.valueOf(somatorioSimilaridade/somatorioPesos);
                 modelo.addRow(vetor);
                 somatorioSimilaridade = 0;
+                somatorioPesos = 0;
             }
+            tableCasos.setModel(modelo);
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
@@ -72,8 +73,31 @@ public class TelaTabela extends javax.swing.JFrame {
         
     }
 
-    public double sim(double a1, double a2, int index) {
-        // Checar na tabela e retornar valor
+    public double sim(int a1, int a2, int index) {
+        switch (index) {
+            case 1: //  Tipo
+                return (a1 == a2) ? 1 : 0;
+            case 2: // Cabo
+                return mCabeamento[a1][a2];
+            case 3: //  Fonte
+                return (a1 == a2) ? 1 : 0;
+            case 4: //  LED Power
+                return mLEDPower[a1][a2];
+            case 5: //  LED Processamento
+                return mLEDProcessamento[a1][a2];
+            case 6: //  Iluminador scanner
+                return mTampa[a1][a2];
+            case 7: //  Imprimindo
+                return mImprimindo[a1][a2];
+            case 8: //  Escanenando
+                return (a1 == a2) ? 1 : 0;
+            case 9: //  Alimentador
+                return mAlimentador[a1][a2];
+            case 10://  Estufa
+                return (a1 == a2) ? 1 : 0;
+            case 11://  Tonner
+                return mTonner[a1][a2];
+        }
         return 0;
     }
     
@@ -240,11 +264,11 @@ public class TelaTabela extends javax.swing.JFrame {
             panelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelPrincipalLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(labelDica)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelPrincipalLayout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(scrollPaneTabela, javax.swing.GroupLayout.PREFERRED_SIZE, 390, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(panelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(panelPrincipalLayout.createSequentialGroup()
+                        .addComponent(labelDica)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(scrollPaneTabela, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 669, Short.MAX_VALUE)))
         );
         panelPrincipalLayout.setVerticalGroup(
             panelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)

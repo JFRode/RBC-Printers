@@ -19,6 +19,7 @@ public class Conexao {
     public Conexao() {
         try {
             this.conexao = DriverManager.getConnection(url, usuario, senha);
+            this.statement = conexao.createStatement();
             System.out.println("Conexao estabelecida;");
         } catch (Exception e) {
             e.printStackTrace();
@@ -68,7 +69,7 @@ public class Conexao {
     }
 
     public int countCaso() {
-        String sql = "SELECT count(id) FROM caso";
+        String sql = "SELECT * FROM caso";
         int count = 0;
         ResultSet rs = null;
         try {

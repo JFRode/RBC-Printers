@@ -20,7 +20,7 @@ public class Insercao {
         System.out.println("porra" + divisor);
         //divisor = Double.valueOf(format.format(divisor));
         for (Insercao l : lista) {
-            con.alterarSimilaridade(l.id, String.valueOf((l.similaridade*100.0)/divisor));
+            con.alterarSimilaridade(l.id, (l.similaridade*100.0)/divisor);
         }
     }
 }

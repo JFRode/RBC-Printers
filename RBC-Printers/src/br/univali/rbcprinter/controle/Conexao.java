@@ -47,7 +47,7 @@ public class Conexao {
     }
     
     public ResultSet consultaCasoOrdenado() {
-        String sql = "SELECT * FROM caso ORDER BY similaridade";
+        String sql = "SELECT * FROM caso ORDER BY similaridade DESC";
         ResultSet rs = null;
         try {
             rs = statement.executeQuery(sql);
@@ -79,11 +79,11 @@ public class Conexao {
         }
     }
     
-    public void alterarSimilaridade(int id, String similaridade) {
+    public void alterarSimilaridade(int id, double similaridade) {
         String sql = "UPDATE caso SET similaridade = ? WHERE id = ?";
         try {
             pStatement = conexao.prepareStatement(sql);
-            pStatement.setString(1, similaridade);
+            pStatement.setDouble(1, similaridade);
             pStatement.setInt(2, id);
             pStatement.executeUpdate();
         } catch (SQLException e) {

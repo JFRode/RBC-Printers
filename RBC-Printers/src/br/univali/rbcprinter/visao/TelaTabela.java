@@ -5,7 +5,6 @@ import br.univali.rbcprinter.controle.Conexao;
 import br.univali.rbcprinter.modelo.Insercao;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.table.DefaultTableModel;
@@ -79,8 +78,6 @@ public class TelaTabela extends javax.swing.JFrame {
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
-        
-        
     }
 
     public double sim(int a1, int a2, int index) {
@@ -253,7 +250,7 @@ public class TelaTabela extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        labelDica.setText("Clique sobre um item para expandir");
+        labelDica.setText("Clique duas vezes sobre um item para expandir a solução.");
 
         tableCasos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {

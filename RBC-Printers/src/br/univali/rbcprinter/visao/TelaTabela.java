@@ -4,6 +4,7 @@ package br.univali.rbcprinter.visao;
 import br.univali.rbcprinter.controle.Conexao;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.DecimalFormat;
 import java.util.List;
 import javax.swing.table.DefaultTableModel;
 
@@ -16,7 +17,8 @@ public class TelaTabela extends javax.swing.JFrame {
     private double[][] mImprimindo = new double[4][4];
     private double[][] mAlimentador = new double[3][3];
     private double[][] mTonner = new double[3][3];
-    private double[] pesos = {0.8, 0, 1, 1, 0.3, 0.5, 1, 1, 0.8, 0.3, 0.8};    
+    private double[] pesos = {0.8, 0, 1, 1, 0.3, 0.5, 1, 1, 0.8, 0.3, 0.8};
+    private DecimalFormat format = new DecimalFormat("#.##");
     
     public TelaTabela(List<Integer> tupla) {
         initComponents();
@@ -56,10 +58,10 @@ public class TelaTabela extends javax.swing.JFrame {
                     }
                     vetor[i] = rs.getString(i+1);
                 }
-                vetor[13] = String.valueOf(somatorioSimilaridade/somatorioPesos);
+                System.out.println(somatorioSimilaridade + "/" + somatorioPesos);
+                vetor[13] = format.format(somatorioSimilaridade/somatorioPesos);
                 modelo.addRow(vetor);
                 somatorioSimilaridade = 0;
-                somatorioPesos = 0;
             }
             tableCasos.setModel(modelo);
         } catch (SQLException ex) {

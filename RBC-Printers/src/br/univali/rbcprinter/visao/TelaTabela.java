@@ -5,7 +5,6 @@ import br.univali.rbcprinter.controle.Conexao;
 import br.univali.rbcprinter.modelo.Insercao;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;

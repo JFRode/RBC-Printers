@@ -47,7 +47,7 @@ public class Conexao {
     }
     
     public ResultSet consultaCasoOrdenado() {
-        String sql = "SELECT * FROM caso ORDER BY similaridade DESC";
+        String sql = "SELECT id, tipo_impressora, cabeamento, fonte, led_power, led_processamento, iluminador_scanner, imprimindo, scanner, alimentador, estufa, tonner, solucao, ROUND(AVG(similaridade)::numeric,2) FROM caso GROUP BY id ORDER BY similaridade DESC";
         ResultSet rs = null;
         try {
             rs = statement.executeQuery(sql);

@@ -8,6 +8,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Properties;
+import javax.swing.JOptionPane;
 
 public class Conexao {
     private final String JDBC     = "postgresql";
@@ -34,6 +35,7 @@ public class Conexao {
             statement = conexao.createStatement();
             System.out.println("Conexao estabelecida;");
         } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Erro ao conectar com banco. " + HOST);
             e.printStackTrace();
         }
     }
@@ -53,6 +55,7 @@ public class Conexao {
         try {
             rs = statement.executeQuery(sql);
         } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Erro ao consultar caso.");
             e.printStackTrace();
         }        
         return rs;
@@ -64,6 +67,7 @@ public class Conexao {
         try {
             rs = statement.executeQuery(sql);
         } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Erro ao consultar caso.");
             e.printStackTrace();
         }
         return rs;
@@ -88,6 +92,7 @@ public class Conexao {
             pStatement.executeUpdate();
             System.out.println("Caso inserido;");
         } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Erro ao inserir novo caso.");
             e.printStackTrace();
         }
     }
@@ -100,6 +105,7 @@ public class Conexao {
             pStatement.setInt(2, id);
             pStatement.executeUpdate();
         } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Erro ao alterar similaridade.");
             e.printStackTrace();
         }
     }

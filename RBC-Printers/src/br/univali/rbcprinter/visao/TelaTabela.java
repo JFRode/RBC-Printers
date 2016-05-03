@@ -19,8 +19,8 @@ public class TelaTabela extends javax.swing.JFrame {
     private double[][] mImprimindo = new double[4][4];
     private double[][] mAlimentador = new double[3][3];
     private double[][] mTonner = new double[3][3];
-    private double[] pesos = {0.8, 0, 1, 1, 0.3, 0.5, 1, 1, 0.8, 0.3, 0.8};
-    private double somatorioPesosSimilaridade = 0;
+    private double[] pesos = {0.8, 0.1, 1, 1, 0.3, 0.5, 1, 1, 0.8, 0.3, 0.8};
+    private double pesosSomatorio = 7.6;
     
     public TelaTabela(List<Integer> tupla) {
         initComponents();
@@ -49,7 +49,7 @@ public class TelaTabela extends javax.swing.JFrame {
         modelo.addColumn("Estufa");
         modelo.addColumn("Tonner");
         modelo.addColumn("Solução");
-        modelo.addColumn("Similaridade");
+        modelo.addColumn("Similaridade %");
         
         double somatorioSimilaridade = 0;
         String[] vetorModel = new String[14]; // Tem id e solução + percentual
@@ -59,16 +59,13 @@ public class TelaTabela extends javax.swing.JFrame {
         ResultSet rs = con.consultaCaso();
         try {
             while (rs.next()) {
-                for (int i=0; i < 13; i++) {
-                    if (i != 0 && i < 12) {
-                        somatorioSimilaridade += pesos[i-1] * sim(tupla.get(i-1), getIndexTabela(rs.getString(i), i), i);
-                    }
+                for (int i=1; i < 12; i++) {
+                    somatorioSimilaridade += pesos[i-1] * sim(tupla.get(i-1), getIndexTabela(rs.getString(i+1), i), i);
                 }
                 listaInsercoes.add(new Insercao(Integer.valueOf(rs.getString(1)), somatorioSimilaridade));
-                this.somatorioPesosSimilaridade += somatorioSimilaridade;
                 somatorioSimilaridade = 0;
             }
-            Insercao.insere(listaInsercoes, this.somatorioPesosSimilaridade);
+            Insercao.insere(listaInsercoes, pesosSomatorio);
             rs = con.consultaCasoOrdenado();
             while (rs.next()) {
                 for (int i=0; i < 14; i++) {

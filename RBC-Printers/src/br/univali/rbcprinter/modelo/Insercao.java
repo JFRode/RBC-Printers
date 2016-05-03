@@ -16,7 +16,7 @@ public class Insercao {
     public static void insere(List<Insercao> lista, double divisor) {
         Conexao con = new Conexao();
         for (Insercao l : lista) {
-            con.alterarSimilaridade(l.id, (l.similaridade*100.0)/divisor);
+            con.alterarSimilaridade(l.id, (l.similaridade*100)/divisor);
         }
     }
 }

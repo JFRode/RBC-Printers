@@ -7,21 +7,33 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Properties;
 
 public class Conexao {
-    private String url = "jdbc:postgresql://localhost:5432/db_rbc-printers";
-    private String usuario = "us_rode";
-    private String senha = "1234";
+    private final String JDBC     = "postgresql";
+    private final String HOST     = "";
+    private final String PORT     = "5432";
+    private final String DATABASE = "";
+    private final String USER     = "";
+    private final String PASSWORD = "";
+    private final String DRIVER   = "org.postgresql.Driver";
+    private String url;
     private Connection conexao;
     private PreparedStatement pStatement;
     private Statement statement;
 
     public Conexao() {
         try {
-            this.conexao = DriverManager.getConnection(url, usuario, senha);
-            this.statement = conexao.createStatement();
+            url = "jdbc:" + JDBC + "://" + HOST + ":" + PORT + "/" + DATABASE;
+            Properties prop = new Properties();
+            prop.setProperty("user", USER);
+            prop.setProperty("password", PASSWORD);
+            prop.setProperty("ssl", "true");
+            prop.setProperty("sslfactory", "org.postgresql.ssl.NonValidatingFactory");
+            conexao = DriverManager.getConnection(url, prop);
+            statement = conexao.createStatement();
             System.out.println("Conexao estabelecida;");
-        } catch (Exception e) {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
     }
